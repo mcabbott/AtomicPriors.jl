@@ -8,6 +8,8 @@ t2 = time()
 
 using DoubleFloats
 
+@testset "AtomicPriors.jl" begin
+
 mat = sobol(5,10).array
 mat = mat ./ sum(mat, dims=1)
 prob = normalise(rand(10))
@@ -139,8 +141,8 @@ end
 
     # Weights only
     @test two ≈ wadam!(pr -> ekern(pr, 0.5), wgrid(1,0:0.1:1); iter=10^3)
-    @test two ≈ wnlopt!(pr -> ekern(pr, 0.5), wgrid(1,0:0.1:1))
-    @test two ≈ wnlopt!(pr -> econd(pr, 0.9), wgrid(1,0:0.1:1))
+    @test two ≈ wnlopt!(pr -> ekern(pr, 0.5), wgrid(1,0:0.1:1)) |> sortcols
+    @test two ≈ wnlopt!(pr -> econd(pr, 0.9), wgrid(1,0:0.1:1)) |> sortcols
 
 end
 @testset "posteriors" begin
@@ -244,3 +246,5 @@ t3 = time()
 end
 
 @info string("Notebook tests took ", @sprintf("%.1f", time()-t3), " seconds")
+
+end # @testset "AtomicPriors.jl"
