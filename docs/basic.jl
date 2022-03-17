@@ -116,7 +116,9 @@ The function `yexp(prior, times)` implements this. With ``d=2`` parameters the p
 yexp(sobol(2, 1000), [1,3]) |> plot
 
 # ╔═╡ 1dbce085-5b88-4c1e-9ad2-18c0dd6e2f27
-md"""We can optimise the prior using this:"""
+md"""
+We can optimise the prior using this:
+"""
 
 # ╔═╡ b7c21355-3398-4a52-97e6-21d7aea0ba04
 begin
