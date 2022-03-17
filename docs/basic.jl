@@ -29,7 +29,7 @@ Here's the optimal prior for a coin being flipped 10 times:
 """
 
 # ╔═╡ dd903702-5aff-48bd-8617-54c60392bf58
-nlopt!(P -> mutual(coin(P,10)), sobol(1,30)) |> plot
+nlopt!(p -> mutual(coin(p,10)), sobol(1,30)) |> plot
 
 # ╔═╡ f8d0f4b8-ca05-4229-8ef4-0f982018acb8
 md"""
