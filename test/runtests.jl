@@ -241,10 +241,9 @@ end
 t3 = time()
 @info string("Main tests took ", @sprintf("%.1f", t3-t2), " seconds")
 
-@testset "notebook: $file" for file in filter(endswith(".jl"), readdir("../docs"))
-    include("../docs/$file") 
-end
-
-@info string("Notebook tests took ", @sprintf("%.1f", time()-t3), " seconds")
+# @testset "notebook: $file" for file in filter(endswith(".jl"), readdir("../docs"))
+#     include("../docs/$file")
+# end
+# @info string("Notebook tests took ", @sprintf("%.1f", time()-t3), " seconds")
 
 end # @testset "AtomicPriors.jl"
