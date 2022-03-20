@@ -5,7 +5,11 @@ using Markdown
 using InteractiveUtils
 
 # ╔═╡ 946d09e8-983f-11ec-071f-51a9e513da79
-using Pkg; Pkg.add(url="https://github.com/mcabbott/AtomicPriors.jl"; io=devnull)
+begin
+	using Pkg
+	Pkg.add(url="https://github.com/mcabbott/AtomicPriors.jl"; io=devnull)
+	Pkg.add("Plots")
+end
 
 # ╔═╡ c1ba5b7d-afc9-4595-a0a5-cb5b21170028
 using AtomicPriors, Plots
@@ -70,7 +74,7 @@ The first argument `p -> mutual(coin(p, 10))` is an anonymous function, which ap
 """
 
 # ╔═╡ 54785e32-40fd-4825-a999-f34c526df2f0
-nlopt!(P -> mutual(coin(P,10)), sobol(1,30))
+nlopt!(p -> mutual(coin(p,10)), sobol(1,30))
 
 # ╔═╡ 5f17dbdf-71dd-4561-9412-93cb46dcfa0d
 md"""
