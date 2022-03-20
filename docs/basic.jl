@@ -7,8 +7,8 @@ using InteractiveUtils
 # ╔═╡ 946d09e8-983f-11ec-071f-51a9e513da79
 begin
 	using Pkg
-	Pkg.add(url="https://github.com/mcabbott/AtomicPriors.jl"; io=devnull)
-	Pkg.add("Plots")
+	Pkg.add(url="https://github.com/mcabbott/AtomicPriors.jl", io=devnull)
+	Pkg.add("Plots", io=devnull)
 end
 
 # ╔═╡ c1ba5b7d-afc9-4595-a0a5-cb5b21170028
@@ -160,7 +160,7 @@ The 3rd prior considered in the review comes from projecting each point ``x`` in
 
 # ╔═╡ 5648ba5d-fd00-4fc5-903a-ce1792e1549b
 begin
-	pproj = transtrum(p -> yexp(p, [1,3]), soboln(2, 20), 0.03, 10^4)
+	pproj = transtrum(p -> yexp(p, [1,3]), soboln(2, 13), 0.03, 10^4)
 	plot(yexp(pproj, [1,3]), c=:green)
 end
 
