@@ -2,6 +2,12 @@
 
 This package contains software related to the following papers:
 
+<!--
+1. *Far from Asymptopia* <br/>
+Michael Abbott & Benjamin Machta <br/>
+[arXiv:2204.XXXXX]()
+-->
+
 1. *Information geometry for multiparameter models: New perspectives on the origin of simplicity* <br/>
 Katherine Quinn, Michael Abbott, Mark Transtrum, Benjamin Machta, James Sethna <br/>
 [arXiv:2111.07176](http://arxiv.org/abs/2111.07176)
@@ -24,13 +30,13 @@ These commands will install the package, and all of its dependencies:
 
 ```julia
 using Pkg  # Julia's built-in package manager
-Pkg.add(url="git@github.com:mcabbott/AtomicPriors.jl.git")
+Pkg.add(url="https://github.com/mcabbott/AtomicPriors.jl")
 Pkg.add("Plots")
 using AtomicPriors, Plots
 ```
 
 The basic use is shown in some noebooks in the `/docs/` folder,
-which can be viewed nicely online at [...github.io...basic.jl.html](https://mcabbott.github.io/AtomicPriors.jl/docs/basic.jl.html).
+which can be viewed nicely online at [...github.io...basic.html](https://mcabbott.github.io/AtomicPriors.jl/docs/basic.html).
 
 In case this prompts anyone to learn Julia, [these lectures](https://julia.quantecon.org/intro.html) were helpful (the first few),
 and [this page](https://docs.julialang.org/en/v1/manual/noteworthy-differences/index.html) lists differences from Matlab (and Python, R).

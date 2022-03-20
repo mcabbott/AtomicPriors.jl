@@ -5,7 +5,7 @@ using Markdown
 using InteractiveUtils
 
 # ╔═╡ 946d09e8-983f-11ec-071f-51a9e513da79
-using Pkg; Pkg.add(url="git@github.com:mcabbott/AtomicPriors.jl.git")
+using Pkg; Pkg.add(url="https://github.com/mcabbott/AtomicPriors.jl"; io=devnull)
 
 # ╔═╡ c1ba5b7d-afc9-4595-a0a5-cb5b21170028
 using AtomicPriors, Plots
