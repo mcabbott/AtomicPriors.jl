@@ -8,7 +8,7 @@ t2 = time()
 
 using DoubleFloats
 
-@testset verbose=true "AtomicPriors.jl" begin
+@testset verbose=true "AtomicPriors.jl" begin  # overall testset
 
 mat = sobol(5,10).array
 mat = mat ./ sum(mat, dims=1)

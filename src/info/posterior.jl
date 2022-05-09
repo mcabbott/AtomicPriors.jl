@@ -126,7 +126,7 @@ function gevidence(T, x::AbsVec, Π::Weighted, σ::Number)
     d,k = size(Π)
     wei = T.(normalise(Π.weights))
     iden = T(1/(sqrt(2*T(π))*σ)^d)
-    dot(wei, exp.(T.((-0.5/σ^2) .* RI3.pairwise2(x, Π.array)))) * iden
+    dot(wei, exp.(T.((-0.5/σ^2) .* pairwise2(x, Π.array)))) * iden
 end
 
 gevidence(x::AbsVec, Π::Weighted, σ::Number) = gevidence(Float64, x, Π, σ)

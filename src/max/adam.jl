@@ -6,18 +6,26 @@ using Tracker: Tracker, data
 
 This uses the ADAM optimiser, taken from Flux, which copes better with noise
 than does LBFGS. It has no stopping criterion, you just specify `iter`.
-
-    wadam!(F, Π; iter=100)
-    wadam!(F, G, Π) = wadam!(F, G(Π), Π)
-
-Adjusts only the weights. The second form maximises `F(G(Π))` evaluating `G`
-only once, `F` at every step.
+```
+julia> adam!(x -> sum(x.array), sobol(1,3); iter=100)
+Weighted 1×3 Matrix{Float64}, clamped 0.0 ≦ θ ≦ 1.0:
+ 0.6  0.85  0.35
+with normalised weights p(θ), 3-element Vector{Float64}:
+ 0.333333  0.333333  0.333333
+```
 """
 function adam!(fmax::Function, x::Weighted; opt=ADAM(), kw...)
     opt_tracker!(fmax, x, opt; kw...)
     x |> trim |> unique
 end
 
+"""
+    wadam!(F, Π; iter=100)
+    wadam!(F, G, Π) = wadam!(F, G(Π), Π)
+
+Adjusts only the weights. The second form maximises `F(G(Π))` evaluating `G`
+only once, `F` at every step.
+"""
 function wadam!(fmax::Function, x::Weighted; opt=ADAM(), kw...)
     vec_opt_tracker!(v -> fmax(wcopy(x, v)), x, opt; kw...)
     x |> trim |> unique

@@ -11,11 +11,13 @@ Keyword `iter=0` allows as many steps as it desires,
 `xtol=0, ftol=0` use the package's default stopping,
 else these are absolute not relative tolerances.
 
-    wnlopt!(F, Π)
-    wnlopt!(F, G, Π) = wnlopt!(F, G(Π), Π)
-
-`wnlopt!` adjusts only the weights. The second form maximises `F(G(Π))`
-evaluating `G` only once, `F` at every step.
+```
+julia> nlopt!(x -> sum(x.array), sobol(1,3); iter=3)
+Weighted 1×2 Matrix{Float64}, clamped 0.0 ≦ θ ≦ 1.0:
+ 1.0  0.75
+with normalised weights p(θ), 2-element Vector{Float64}:
+ 0.666667  0.333333
+```
 """
 function nlopt!(fmax::Function, x::Weighted; kw...)
     sv = flatten(x)
@@ -25,7 +27,13 @@ function nlopt!(fmax::Function, x::Weighted; kw...)
     flatcopy!(x, sv) |> normalise! |> clamp! |> trim |> unique
 end
 
+"""
+    wnlopt!(F, Π)
+    wnlopt!(F, G, Π) = wnlopt!(F, G(Π), Π)
 
+`wnlopt!` adjusts only the weights. The second form maximises `F(G(Π))`
+evaluating `G` only once, `F` at every step.
+"""
 function wnlopt!(fmax::Function, x::Weighted; kw...)
     sv = x.weights
     minfun(v) = -fmax(wcopy(x, v))

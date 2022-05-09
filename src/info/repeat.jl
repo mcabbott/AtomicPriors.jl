@@ -1,7 +1,6 @@
 
 """
     repeat(L::Weighted, m)
-    # L |> repeat(m)
 
 Works out the likelihood matrix corresponding to `m` repetitions of the given one.
 """
@@ -181,70 +180,6 @@ function posn_inner!(pzx, like::Matrix, z::SVector{m}, prob, k) where m
         out += pzx[c] * prob[c] * log(pzx[c] * ipx)
     end
     out
-end
-
-#===== magic posterior with repetition =====#
-
-"""
-    mpost([j1,j2,...,jm], f, Π, mY=m)
-
-Just like `mpost(j,f,Π)` but for `m` IID measurements.
-Similar methods with likelihoods or `fX`, `fY` etc.
-Optional last argument is `mY` if different.
-
-Maybe now correct, although multiplying by multiplicity looks odd.
-Slow, but haven't needed faster yet.
-"""
-function mpost(js::AbsVec{Int}, LX::Weighted, LY::Weighted=LX, mY::Int=length(js); ent=true)
-    mX = length(js)
-    prob = normalise(LX.weights)
-    info = mutual_pos(LY.array, prob, mY)
-
-    # @reduce pen := sum(x,a,n) prob[x,a] * log(LX.array[js[n],a]) # a bug!
-
-    # pzθ = LX.array[js,:] # does this have aliasing problems? Yes it does :(
-    # @reduce pen := sum(n,a) prob[a] * log(pzθ[n,a])
-
-    # First attempt, wrong I think
-    # pzθ = LX.array[js[1],:]
-    # @reduce pen := sum(a) prob[a] * log(pzθ[a])
-    # for n in 2:mX
-    #     pzθ = LX.array[js[n],:]
-    #     pen += @reduce sum(a) prob[a] * log(pzθ[a])
-    # end
-    # @reduce ess[a] := sum(x) -LX.array[x,a] * log(LX.array[x,a]) * mX
-    # info + (pen + dot(prob, ess))/2
-
-    # First term, log(p(zⱼ|θₐ))
-    muljs = multinomial_pos(mX, js)
-    pzθ = LX.array[js[1],:] .* muljs
-    @reduce pen := sum(a) prob[a] * log(pzθ[a])
-    for n in 2:mX
-        pzθ = LX.array[js[n],:] .* muljs
-        pen += @reduce sum(a) prob[a] * log(pzθ[a])
-    end
-
-    # Second term, S(X|...)
-    dX,k = size(LX)
-    posX = part_pos(mX, dX)
-    multX = multi_pos(mX, dX)
-    for i in 1:length(posX)
-        jsi = posX[i]
-        pzθ = LX.array[jsi[1],:] .* multX[i]
-        for n in 2:mX
-            pzθ = pzθ .* LX.array[jsi[n],:]
-        end
-        pen += @reduce sum(a) ent * prob[a] *( -pzθ[a] * log(pzθ[a]) )
-    end
-
-    info + pen/2
-end
-
-mpost(js::AbsVec{Int}, fX, fY, post::Weighted, mY::Int=length(js)) =
-    mpost(js, fX(post), fY(post), mY)
-function mpost(js::AbsVec{Int}, f, post::Weighted, mY::Int=length(js))
-    fX = f(post)
-    mpost(js, fX, fX, mY)
 end
 
 
