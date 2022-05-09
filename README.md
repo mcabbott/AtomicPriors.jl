@@ -4,7 +4,7 @@ This package contains software related to the following papers:
 
 1. *Far from Asymptopia* <br/>
 Michael Abbott & Benjamin Machta <br/>
-[arXiv:2203.XXXXX](http://arxiv.org/abs/2205.03343)
+[arXiv:2205.03343](http://arxiv.org/abs/2205.03343)
 
 2. *Information geometry for multiparameter models: New perspectives on the origin of simplicity* <br/>
 Katherine Quinn, Michael Abbott, Mark Transtrum, Benjamin Machta, James Sethna <br/>
